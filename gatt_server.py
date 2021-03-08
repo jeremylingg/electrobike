@@ -67,7 +67,6 @@ class Application(dbus.service.Object):
 
         return response
 
-
 class Service(dbus.service.Object):
     """
     org.bluez.GattService1 interface implementation
@@ -116,7 +115,6 @@ class Service(dbus.service.Object):
             raise exceptions.InvalidArgsException()
 
         return self.get_properties()[GATT_SERVICE_IFACE]
-
 
 class Characteristic(dbus.service.Object):
     """

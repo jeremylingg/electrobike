@@ -13,7 +13,6 @@ BLUEZ_SERVICE_NAME = 'org.bluez'
 LE_ADVERTISING_MANAGER_IFACE = 'org.bluez.LEAdvertisingManager1'
 DBUS_OM_IFACE = 'org.freedesktop.DBus.ObjectManager'
 DBUS_PROP_IFACE = 'org.freedesktop.DBus.Properties'
-
 LE_ADVERTISEMENT_IFACE = 'org.bluez.LEAdvertisement1'
 
 
@@ -97,8 +96,7 @@ class Advertisement(dbus.service.Object):
     def Release(self):
         print('%s: Released!' % self.path)
 
-
-class TestAdvertisement(Advertisement):
+class ElectroBikeAdvertisement(Advertisement):
     def __init__(self, bus, index):
         Advertisement.__init__(self, bus, index, 'peripheral')
         self.add_service_uuid('180D')
@@ -132,8 +130,8 @@ def advertising_main(mainloop, bus, adapter_name):
     ad_manager = dbus.Interface(bus.get_object(BLUEZ_SERVICE_NAME, adapter),
                                 LE_ADVERTISING_MANAGER_IFACE)
 
-    test_advertisement = TestAdvertisement(bus, 0)
+    electrobike_advertisement = ElectroBikeAdvertisement(bus, 0)
 
-    ad_manager.RegisterAdvertisement(test_advertisement.get_path(), {},
+    ad_manager.RegisterAdvertisement(electrobike_advertisement.get_path(), {},
                                      reply_handler=register_ad_cb,
                                      error_handler=functools.partial(register_ad_error_cb, mainloop))
